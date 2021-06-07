@@ -15,9 +15,10 @@ The following procedure has been tested on **Ubuntu 18.04.5 LTS**.
 
 install ansible
 
-'''
+```
 $ sudo apt update
 $ sudo apt install software-properties-common
 $ sudo add-apt-repository --yes --update ppa:ansible/ansible
 $ sudo apt install ansible
-'''
+```
+
