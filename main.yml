@@ -1,0 +1,29 @@
+---
+- name: Playbook 
+  hosts: all
+  become_user: root
+  become: true
+
+  tasks:
+    - name: test to control the disk space
+      assert:
+        that: 
+          - "{{ item.mount == '/' and ( item.size_available <= 4000000  )}}"
+      with_items: '{{ansible_mounts}}'
+      ignore_errors: yes
+      register: disk_free
+
+    - name: install lvm2 tools
+      package:
+        name:
+          - lvm2
+        state: present
+      when: disk_free is failed
+
+    - name: Resize '/dev/sda1' to have 40 GB
+      command: fsadm -y resize '/dev/sda1' 40G       
+      when: disk_free is failed
+
+
+
+
