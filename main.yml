@@ -23,7 +23,6 @@
     - name: Resize '/dev/sda1' to have 40 GB
       command: fsadm -y resize '/dev/sda1' 40G       
       when: disk_free is failed
-
-
+    
 
 
