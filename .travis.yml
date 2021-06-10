@@ -1,4 +1,6 @@
-sudo: required
+language: general
 
-services:
-  - docker
+os:
+  - linux
+
+dist: bionic
