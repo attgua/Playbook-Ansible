@@ -18,10 +18,15 @@ Vagrant.configure("2") do |config|
   	      node.vm.box =machine[:box]
   	      node.vm.hostname = machine[:hostname]
   	      node.vm.network :private_network, ip: machine[:ip]
-
+          
+          node.vm.provision 'ansible' do |ansible|
+          	ansible.playbook="main.yml"
+          end
+          
           node.vm.provider :virtualbox do |vb|
           	vb.customize ["modifyvm", :id, "--memory",1024]
           	vb.customize ["modifyvm", :id, "--cpus",1]
+
           end
 	  end
   end
