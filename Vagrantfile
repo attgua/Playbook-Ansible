@@ -1,33 +1,22 @@
-Vagrant.configure("2") do |config|
+require_relative './vagrant/key_authorization'
 
-	servers =[
-	  {
-		  :hostname =>"Server1",
-		  :box =>"centos/7",
-		  :ip => "172.16.1.50"
-	  },
-    {
-    	:hostname=>"Server2",
-    	:box =>"centos/7",
-    	:ip => "172.16.1.51"
-    }
-	]
+Vagrant.configure('2') do |config|
+  config.vm.box = 'centos/7'
+  config.ssh.insert_key = false #false to use the private key
+  authorize_key_for_root config, '~/.ssh/id_dsa.pub', '~/.ssh/id_rsa.pub'
 
-  servers.each do |machine|
-  	config.vm.define machine[:hostname] do |node|
-  	      node.vm.box =machine[:box]
-  	      node.vm.hostname = machine[:hostname]
-  	      node.vm.network :private_network, ip: machine[:ip]
-          
-          node.vm.provision 'ansible' do |ansible|
-          	ansible.playbook="main.yml"
-          end
-          
-          node.vm.provider :virtualbox do |vb|
-          	vb.customize ["modifyvm", :id, "--memory",1024]
-          	vb.customize ["modifyvm", :id, "--cpus",1]
+  N = 2
+  (1..N).each do |server_id|
+    config.vm.define "server#{server_id}" do |server|  
+      server.vm.hostname = "server#{server_id}"
+      server.vm.network "private_network", ip: "172.16.1.#{50+server_id}"
 
-          end
-	  end
+      if server_id == N
+        server.vm.provision :ansible do |ansible|
+          ansible.limit = "all"
+          ansible.playbook = "main.yml"
+        end      
+      end
+    end
   end
 end
