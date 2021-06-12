@@ -1,12 +1,12 @@
 ---
 - name: Playbook 
-  hosts: all
+  hosts: Servers
   become_user: root
   become: true
 
   roles:
     - control_storage
-    - install_docker
+  #  - install_docker
 
 
 

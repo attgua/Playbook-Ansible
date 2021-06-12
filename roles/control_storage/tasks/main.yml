@@ -3,17 +3,17 @@
   assert:
     that: 
       - "{{ item.mount == '/' and ( item.size_available <= 4000000  )}}"
-  with_items: '{{ansible_mounts}}'
+  loop: "{{ ansible_mounts|flatten(levels=1) }}"  #with_items is not recomended
   ignore_errors: yes
-  register: disk_free
+  register: sufficient_memory
 
 - name: install lvm2 tools
   package:
     name:
       - lvm2
     state: present
-  when: disk_free is failed
+  when: sufficient_memory is failed
 
 - name: Resize '/dev/sda1' device in order to have 40 GB
   command: fsadm -y resize '/dev/sda1' 40G       
-  when: disk_free is failed
+  when: sufficient_memory is failed

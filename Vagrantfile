@@ -1,22 +1,67 @@
-require_relative './vagrant/key_authorization'
+#require_relative './vagrant/key_authorization'
 
-Vagrant.configure('2') do |config|
-  config.vm.box = 'centos/7'
-  config.ssh.insert_key = false #false to use the private key
-  authorize_key_for_root config, '~/.ssh/id_dsa.pub', '~/.ssh/id_rsa.pub'
+Vagrant.configure("2") do |config|
 
-  N = 2
-  (1..N).each do |server_id|
-    config.vm.define "server#{server_id}" do |server|  
-      server.vm.hostname = "server#{server_id}"
-      server.vm.network "private_network", ip: "172.16.1.#{50+server_id}"
+  #config.ssh.insert_key = false   #false to use the private key
+  #authorize_key_for_root config, '~/.ssh/id_dsa.pub', '~/.ssh/id_rsa.pub'
 
-      if server_id == N
-        server.vm.provision :ansible do |ansible|
-          ansible.limit = "all"
-          ansible.playbook = "main.yml"
-        end      
-      end
-    end
+
+	servers =[
+	  {
+		  :hostname =>"Server1",
+		  :box =>"centos/7",
+		  :ip => "192.168.33.40"
+	  },
+    {
+    	:hostname=>"Server2",
+    	:box =>"centos/7",
+    	:ip => "192.168.33.41"
+    }
+	]
+
+  servers.each do |machine|
+  	config.vm.define machine[:hostname] do |node|
+  	      node.vm.box =machine[:box]
+  	      node.vm.hostname = machine[:hostname]
+  	      node.vm.network :private_network, ip: machine[:ip]
+          
+
+          node.vm.provision "shell" do |s|
+            ssh_prv_key = ""
+            ssh_pub_key = ""
+            if File.file?("#{Dir.home}/.ssh/id_rsa")
+              ssh_prv_key = File.read("#{Dir.home}/.ssh/id_rsa")
+              ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
+            else
+              puts "No SSH key found. You will need to remedy this before pushing to the repository."
+            end
+            s.inline = <<-SHELL
+              if grep -sq "#{ssh_pub_key}" /home/vagrant/.ssh/authorized_keys; then
+                echo "SSH keys already provisioned."
+              exit 0;
+              fi
+              echo "SSH key provisioning."
+              mkdir -p /home/vagrant/.ssh/
+              touch /home/vagrant/.ssh/authorized_keys
+              echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
+              echo #{ssh_pub_key} > /home/vagrant/.ssh/.pub
+              chmod 644 /home/vagrant/.ssh/id_rsa.pub
+              echo "#{ssh_prv_key}" > /home/vagrant/.ssh/id_rsa
+              chmod 600 /home/vagrant/.ssh/id_rsa
+              chown -R vagrant:vagrant /home/vagrant
+              exit 0
+            SHELL
+          end
+
+          node.vm.provision 'ansible' do |ansible|
+          	ansible.playbook="main.yml"
+          end
+          
+          node.vm.provider :virtualbox do |vb|
+          	vb.customize ["modifyvm", :id, "--memory",1024]
+          	vb.customize ["modifyvm", :id, "--cpus",1]
+
+          end
+	  end
   end
 end
