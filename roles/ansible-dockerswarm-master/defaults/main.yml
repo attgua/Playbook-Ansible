@@ -111,7 +111,9 @@ docker_group_name: "docker"
 
 # List of the users in the Docker group
 docker_group_users:
-  - "{{ ansible_user | default(ansible_user_id) }}"  # if ansible_user is not defined, we default to the ansible ansible_user_id fact
+  - "{{ ansible_user | default(ansible_user_id) }}"
+  # if ansible_user is not defined, we default to the
+  # ansible ansible_user_id fact
 
 ##
 # Docker Swarm
@@ -124,7 +126,8 @@ docker_group_users:
 # You can set any interface, that is listened by docker engine.
 # e.g. docker_swarm_interface: "eth1"
 docker_swarm_interface: "{{ ansible_default_ipv4['interface'] }}"
-docker_swarm_addr: "{{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}"
+docker_swarm_addr: "{{ hostvars[inventory_hostname]['ansible_' +
+docker_swarm_interface]['ipv4']['address'] }}"
 docker_swarm_port: 2377
 
 ##
@@ -137,6 +140,7 @@ skip_containerd: false  # if true, skips the setup of containerd
 skip_engine: false      # if true, skips the docker engine installation
 skip_cli: false         # if true, skips the docker cli installation
 skip_swarm: false       # if true, skips the swarm setup
-skip_group: false       # if true, does not add the docker_admin_users to the docker_group_name
+skip_group: false       # if true, does not add the
+#                         docker_admin_users to the docker_group_name
 skip_docker_py: false   # if true, skips the installation of docker-py
 skip_docker_compose: false  # if true, skips the installation of docker-compose

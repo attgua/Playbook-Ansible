@@ -1,9 +1,9 @@
 ---
 - name: test to control the disk space
   assert:
-    that: 
+    that:
       - "{{ item.mount == '/' and ( item.size_available < 42949672960  )}}"
-  loop: "{{ ansible_mounts|flatten(levels=1) }}"  #with_items is not recomended
+  loop: "{{ ansible_mounts|flatten(levels=1) }}"  # with_items is not recomended
   ignore_errors: yes
   register: sufficient_memory
 
@@ -15,5 +15,5 @@
   when: sufficient_memory is failed
 
 - name: Resize '/dev/sda1' device in order to have 40 GB
-  command: fsadm -y resize '/dev/sda1' 40G       
+  command: fsadm -y resize '/dev/sda1' 40G
   when: sufficient_memory is failed

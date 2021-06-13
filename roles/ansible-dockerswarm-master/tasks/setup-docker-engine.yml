@@ -2,12 +2,14 @@
 
 - block:
 
-    - name: Prefix the Docker package version with the correct separator on RedHat.
+    - name: "Prefix the Docker package version with
+     the correct separator on RedHat."
       set_fact:
         _docker_package_version: "-{{ docker_package_version }}"
       when: ansible_os_family == 'RedHat'
 
-    - name: Prefix the Docker package version with the correct separator on Debian.
+    - name: "Prefix the Docker package version
+     with the correct separator on Debian."
       set_fact:
         _docker_package_version: "={{ docker_package_version }}"
       when: ansible_os_family == 'Debian'
@@ -35,7 +37,8 @@
     - name: Reload systemd and restart Docker.
       service:
         name: docker
-        state: "{% if docker_service_state != 'stopped' %}restarted{% else %}stopped{% endif %}"
+        state: "{% if docker_service_state != 'stopped' %}
+        restarted{% else %}stopped{% endif %}"
         daemon_reload: yes
       when: _docker_systemd_override.changed
 
