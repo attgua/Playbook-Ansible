@@ -2,7 +2,7 @@
 - name: test to control the disk space
   assert:
     that: 
-      - "{{ item.mount == '/' and ( item.size_available <= 4000000  )}}"
+      - "{{ item.mount == '/' and ( item.size_available < 42949672960  )}}"
   loop: "{{ ansible_mounts|flatten(levels=1) }}"  #with_items is not recomended
   ignore_errors: yes
   register: sufficient_memory

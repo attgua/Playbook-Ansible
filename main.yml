@@ -6,8 +6,9 @@
 
   roles:
     - control_storage
-  #  - install_docker
-
+    - install_docker
+    - ports_opener
+    - ansible-dockerswarm-master
 
 
 

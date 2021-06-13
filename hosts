@@ -1,6 +1,6 @@
 [Servers]
-Server1
-Server2
+server1 ansible_host=192.168.33.40
+server2 ansible_host=192.168.33.41
 
 [Servers:vars]
 ansible_connection=ssh
@@ -9,3 +9,8 @@ http_port=22
 ansible_ssh_common_args='-o UserKnownHostsFile=/dev/null'
 
 
+[docker_swarm_manager]
+server1
+
+[docker_swarm_worker]
+server2

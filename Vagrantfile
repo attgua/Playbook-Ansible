@@ -8,13 +8,13 @@ Vagrant.configure("2") do |config|
 
 	servers =[
 	  {
-		  :hostname =>"Server1",
-		  :box =>"centos/7",
+		  :hostname =>"server1",
+		  :box =>"centos/8",
 		  :ip => "192.168.33.40"
 	  },
     {
-    	:hostname=>"Server2",
-    	:box =>"centos/7",
+    	:hostname=>"server2",
+    	:box =>"centos/8",
     	:ip => "192.168.33.41"
     }
 	]

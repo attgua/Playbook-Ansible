@@ -1,0 +1,29 @@
+---
+#open ports on CentOS 
+
+- name: start firewalld
+  command: sudo systemctl start firewalld
+
+- name: enable firewalld
+  command: sudo systemctl enable firewalld
+
+- name: open ports needed 
+  command: sudo firewall-cmd --add-port=2376/tcp --permanen
+
+- name: open ports needed 
+  command: sudo firewall-cmd --add-port=2377/tcp --permanent
+
+- name: open ports needed 
+  command: firewall-cmd --add-port=7946/tcp --permanent
+
+- name: open ports needed 
+  command: firewall-cmd --add-port=7946/udp --permanent
+
+- name: open ports needed 
+  command: firewall-cmd --add-port=4789/udp --permanent
+
+- name: reload firewalld
+  command: firewall-cmd --reload
+
+- name: reload
+  command: systemctl restart docker
