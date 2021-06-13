@@ -4,4 +4,10 @@ language: general
 os:
   - linux
 
-dist: bionic
+install:
+  - pip install yamllint
+  - pip install ansible-lint
+
+script:
+  - yamllint .
+  - ansible-lint main.yml

@@ -1,3 +1,5 @@
+[![Build Status](https://www.travis-ci.com/attgua/Playbook-Ansible.svg?branch=main)](https://www.travis-ci.com/attgua/Playbook-Ansible)
+
 # Playbook-Ansible
 The task of this repository is to create a **playbook with Ansible** able to:
 
@@ -13,9 +15,9 @@ The task of this repository is to create a **playbook with Ansible** able to:
 
 To make this playbook work properly are required:
 
-* `[VirtualBox](https://www.virtualbox.org/)`
-* `[Vagrant](https://www.ansible.com/)` 
-* `[Ansible](ansible.com)*`
+* `[VirtualBox]`(https://www.virtualbox.org/)
+* `[Vagrant]`(https://www.ansible.com/)
+* `[Ansible]`(https://ansible.com)
 
 The presence of *[vagrant-hostsupdater](https://github.com/agiledivider/vagrant-hostsupdater)* is also recommended for an automatic management of hosts, which otherwise can still be done manually.
 
