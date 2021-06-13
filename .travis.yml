@@ -1,5 +1,7 @@
 ---
-language: general
+language: generic
+
+dist: xenial
 
 os:
   - linux
@@ -9,5 +11,5 @@ install:
   - pip install ansible-lint
 
 script:
-  - yamllint .
+  - yamllint --no-warnings .
   - ansible-lint main.yml
