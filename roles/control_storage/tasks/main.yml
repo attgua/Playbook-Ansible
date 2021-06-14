@@ -2,9 +2,9 @@
 - name: test to control the disk space
   assert:
     that:
-      - "{{ item.mount == '/' and ( item.size_available < 42949672960  )}}"
-  loop: "{{ ansible_mounts|flatten(levels=1) }}"  # with_items is not recomended
-  ignore_errors: yes
+      - " {{ item.mount == '/' and ( item.size_available < 42949672960 ) }} "
+  loop: "{{ ansible_mounts|flatten(levels=1) }}"
+  ignore_errors: true
   register: sufficient_memory
 
 - name: install lvm2 tools

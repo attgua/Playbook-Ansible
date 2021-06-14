@@ -18,40 +18,42 @@
   get_url:
     url: https://download.docker.com/linux/centos/docker-ce.repo
     dest: /etc/yum.repos.d/docer-ce.repo
-  become: yes
+  become: true
 
 - name: Enable Docker Edge repo
   ini_file:
     dest: /etc/yum.repos.d/docer-ce.repo
+    mode: 0644
     section: 'docker-ce-edge'
     option: enabled
     value: 0
-  become: yes
+  become: true
 
 - name: Enable Docker Test repo
   ini_file:
     dest: /etc/yum.repos.d/docer-ce.repo
+    mode: 0644
     section: 'docker-ce-test'
     option: enabled
     value: 0
-  become: yes
+  become: true
 
 - name: Install Docker
   package:
     name: docker-ce
     state: latest
-  become: yes
+  become: true
 
 - name: Start Docker service
   service:
     name: docker
     state: started
-    enabled: yes
-  become: yes
+    enabled: true
+  become: true
 
 - name: Add user vagrant to docker group
   user:
     name: vagrant
     groups: docker
-    append: yes
-  become: yes
+    append: true
+  become: true

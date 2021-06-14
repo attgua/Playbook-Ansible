@@ -3,27 +3,48 @@
 
 - name: start firewalld
   command: sudo systemctl start firewalld
+  register: start_firewalld
+  changed_when: false
 
 - name: enable firewalld
   command: sudo systemctl enable firewalld
+  register: enable_firewalld
+  changed_when: false
 
 - name: open ports needed
   command: sudo firewall-cmd --add-port=2376/tcp --permanen
+  register: open_2376
+  changed_when: false
 
 - name: open ports needed
   command: sudo firewall-cmd --add-port=2377/tcp --permanent
+  register: open_2377
+  changed_when: false
 
 - name: open ports needed
   command: firewall-cmd --add-port=7946/tcp --permanent
+  register: open_7946_tcp
+  changed_when: false
 
 - name: open ports needed
   command: firewall-cmd --add-port=7946/udp --permanent
+  register: open_7946_udp
+  changed_when: false
 
 - name: open ports needed
   command: firewall-cmd --add-port=4789/udp --permanent
+  register: open_4789
+  changed_when: false
 
 - name: reload firewalld
   command: firewall-cmd --reload
+  register: reload_firewalld
+  changed_when: false
 
-- name: reload
-  command: systemctl restart docker
+- name: reload system
+  ansible.builtin.systemd:
+    state: restarted
+    name: docker
+  #  command: systemctl restart docker
+  #  register: reload_systemctl
+  #  changed_when: false
