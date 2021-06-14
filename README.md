@@ -60,7 +60,6 @@ The second condition with `fasdam` now disponible resizes the disk memory.
 
 A pre-configured playbook made by [yonglai](https://gist.github.com/yonglai/d4617d6914d5f4eb22e4e5a15c0e9a03) is used to install docker.
 
-First yum is installed as a package manager.
 
 
 

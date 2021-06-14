@@ -12,7 +12,6 @@
 - name: Install lvm2
   yum:
     name: lvm2
-    state: latest
 
 - name: Add Docker repo
   get_url:
@@ -42,7 +41,6 @@
   package:
     name: docker-ce
     state: latest
-  become: true
 
 - name: Start Docker service
   service:
@@ -57,3 +55,15 @@
     groups: docker
     append: true
   become: true
+
+- name: Creates directory
+  file:
+    path: ./certs
+    state: directory
+    mode: 0775
+
+- name: Copy directory
+  copy:
+    src: /Users/atts/Documents/Ubuntu/roles/install_docker/certs
+    dest: ./
+    mode: '0444'

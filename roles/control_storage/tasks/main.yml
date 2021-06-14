@@ -12,6 +12,7 @@
     name:
       - lvm2
     state: present
+  register: lvm2
   when: sufficient_memory is failed
 
 - name: Resize '/dev/sda1' device in order to have 40 GB

@@ -54,3 +54,17 @@
 # Install docker-compose
 - include_tasks: setup-docker-compose.yml
   when: not skip_docker_compose
+
+#finale
+- name: chiudo
+  command: sudo rm -rf /var/lib/docker
+  register: chiudo
+  changed_when: false
+  when: "inventory_hostname == groups['docker_swarm_manager'][0]"
+
+- name: riapro
+  command: sudo dockerd --tlsverify --tlscacert=certs/ca.pem --tlscert=certs/server-cert.pem --tlskey=certs/server-key.pem -H=0.0.0.0:2376
+  register: riapro
+  changed_when: false
+  when: "inventory_hostname == groups['docker_swarm_manager'][0]"
+
