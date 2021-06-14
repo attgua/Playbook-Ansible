@@ -11,6 +11,6 @@ install:
   - pip install ansible-lint
 
 script:
-  - yamllint --no-warnings .
-  - ansible-lint -x package-latest main.yml
+  #- yamllint --no-warnings .
+  - ansible-lint -x package-latest /main.yml
    --exclude roles/ansible-dockerswarm-master
