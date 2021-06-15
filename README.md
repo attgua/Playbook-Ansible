@@ -56,9 +56,18 @@ The first condition installs the `lvm2` package.
 The second condition with `fasdam` now disponible resizes the disk memory.
 
 
-## Install Docker
+## Docker Setup
 
 A pre-configured playbook made by [yonglai](https://gist.github.com/yonglai/d4617d6914d5f4eb22e4e5a15c0e9a03) is used to install docker.
+
+
+
+## Docker Configuration
+
+
+
+## Docker Swarm
+
 
 
 

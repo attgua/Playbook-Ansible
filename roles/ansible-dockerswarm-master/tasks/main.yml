@@ -55,16 +55,20 @@
 - include_tasks: setup-docker-compose.yml
   when: not skip_docker_compose
 
-#finale
-- name: chiudo
-  command: sudo rm -rf /var/lib/docker
-  register: chiudo
-  changed_when: false
-  when: "inventory_hostname == groups['docker_swarm_manager'][0]"
+#stop & restart dockerd
+#- name: stop dockerd
+#  command: sudo rm -rf /var/lib/docker && rm /var/run/docker.pid
+#  register: stop_dockerd
+#  changed_when: false
 
-- name: riapro
-  command: sudo dockerd --tlsverify --tlscacert=certs/ca.pem --tlscert=certs/server-cert.pem --tlskey=certs/server-key.pem -H=0.0.0.0:2376
-  register: riapro
-  changed_when: false
-  when: "inventory_hostname == groups['docker_swarm_manager'][0]"
+#- name: open a protected connection on s1
+#  command: sudo dockerd --tlsverify --tlscacert=./s1/ca.pem --tlscert=./s1/server-cert.pem --tlskey=./s1/server-key.pem -H=0.0.0.0:2376 
+#  register: riapro
+#  changed_when: false
+#  when: "inventory_hostname == groups['docker_swarm_manager'][0]"
 
+#- name: open a protected connection on s2
+#  command: sudo nohup dockerd --tlsverify --tlscacert=./s2/ca2.pem --tlscert=./s2/server-cert2.pem --tlskey=./s2/server-key2.pem -H=0.0.0.0:2376
+#  register: riapro
+#  changed_when: false
+#  when: "inventory_hostname == groups['docker_swarm_worker'][0]"
