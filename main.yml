@@ -8,4 +8,5 @@
     - control_storage
     - install_docker
     - ports_opener
+    - ansible-role-docker-tls-master
     - ansible-dockerswarm-master

@@ -1,0 +1,4 @@
+# ansible managed
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --tlsverify --tlscacert=home/vagrant/s2/ca2.pem --tlscert=home/vagrant/s2/server-cert2.pem --tlskey=home/vagrant/s2/server-key2.pem
