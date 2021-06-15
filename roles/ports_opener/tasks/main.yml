@@ -45,6 +45,3 @@
   ansible.builtin.systemd:
     state: restarted
     name: docker
-  #  command: systemctl restart docker
-  #  register: reload_systemctl
-  #  changed_when: false

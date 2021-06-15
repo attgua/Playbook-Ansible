@@ -9,6 +9,34 @@
 #- name: Import server_certificate.yml
 #  import_tasks: server_certificate.yml
 
+- name: Creates directory
+  file:
+    path: ./s1
+    state: directory
+    mode: 0775
+  when: "inventory_hostname == groups['docker_swarm_manager'][0]"
+
+- name: Creates directory
+  file:
+    path: ./s2
+    state: directory
+    mode: 0775
+  when: "inventory_hostname == groups['docker_swarm_worker'][0]"
+
+- name: Copy directory
+  copy:
+    src: /Users/atts/Documents/GitHub/Playbook-Ansible/roles/install_docker/certs/s1
+    dest: ./
+    mode: '0444'
+  when: "inventory_hostname == groups['docker_swarm_manager'][0]"
+
+- name: Copy directory
+  copy:
+    src: /Users/atts/Documents/GitHub/Playbook-Ansible/roles/install_docker/certs/s2
+    dest: ./
+    mode: '0444'
+  when: "inventory_hostname == groups['docker_swarm_worker'][0]"
+
 - name: Import restart_docker.yml
   import_tasks: restart_docker.yml
 

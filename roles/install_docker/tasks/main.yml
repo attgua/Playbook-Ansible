@@ -1,17 +1,33 @@
 ---
+
+- name: Check if yum is installed
+  command: rpm -q yum
+  register: rpm_check_yum
+
 - name: Install yum utils
   yum:
     name: yum-utils
     state: latest
+  when: rpm_check_yum.stdout.find('is not installed') != -1
+
+- name: Check if device-mapper-persistent-data is installed
+  command: rpm -q device-mapper-persistent-data
+  register: rpm_device_mapper_persistent_data
 
 - name: Install device-mapper-persistent-data
   yum:
     name: device-mapper-persistent-data
     state: latest
+  when: rpm_device_mapper_persistent_data.stdout.find('is not installed') != -1
+
+- name: Check if dlvm2 is installed
+  command: rpm -q lvm2
+  register: rpm_lvm2
 
 - name: Install lvm2
   yum:
     name: lvm2
+  when: rpm_lvm2.stdout.find('is not installed') != -1
 
 - name: Add Docker repo
   get_url:
@@ -37,10 +53,15 @@
     value: 0
   become: true
 
+- name: Check if docker is installed
+  command: rpm -q docker-ce
+  register: rpm_docker
+
 - name: Install Docker
   package:
     name: docker-ce
     state: latest
+  when: rpm_docker.stdout.find('is not installed') != -1
 
 - name: Start Docker service
   service:
@@ -55,31 +76,3 @@
     groups: docker
     append: true
   become: true
-
-- name: Creates directory
-  file:
-    path: ./s1
-    state: directory
-    mode: 0775
-  when: "inventory_hostname == groups['docker_swarm_manager'][0]"
-
-- name: Creates directory
-  file:
-    path: ./s2
-    state: directory
-    mode: 0775
-  when: "inventory_hostname == groups['docker_swarm_worker'][0]"
-
-- name: Copy directory
-  copy:
-    src: /Users/atts/Documents/GitHub/Playbook-Ansible/roles/install_docker/certs/s1
-    dest: ./
-    mode: '0444'
-  when: "inventory_hostname == groups['docker_swarm_manager'][0]"
-
-- name: Copy directory
-  copy:
-    src: /Users/atts/Documents/GitHub/Playbook-Ansible/roles/install_docker/certs/s2
-    dest: ./
-    mode: '0444'
-  when: "inventory_hostname == groups['docker_swarm_worker'][0]"
