@@ -1,5 +1,5 @@
 ---
-- name: Playbook
+- name: Check and Setting on CentOs
   hosts: Servers
   become_user: root
   become: true

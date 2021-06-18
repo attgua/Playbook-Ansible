@@ -12,27 +12,27 @@
   changed_when: false
 
 - name: open ports needed
-  command: sudo firewall-cmd --add-port=2376/tcp --permanen
+  command: 'sudo firewall-cmd --add-port={{ docker_swarm_port_TCP_client }}/tcp --permanen'
   register: open_2376
   changed_when: false
 
 - name: open ports needed
-  command: sudo firewall-cmd --add-port=2377/tcp --permanent
+  command: 'sudo firewall-cmd --add-port={{ docker_swarm_port_TCP_cluster_managment }}/tcp --permanent'
   register: open_2377
   changed_when: false
 
 - name: open ports needed
-  command: firewall-cmd --add-port=7946/tcp --permanent
+  command: 'firewall-cmd --add-port={{ docker_swarm_port_TCP_UDP_nodes_communication }}/tcp --permanent'
   register: open_7946_tcp
   changed_when: false
 
 - name: open ports needed
-  command: firewall-cmd --add-port=7946/udp --permanent
+  command: 'firewall-cmd --add-port={{ docker_swarm_port_TCP_UDP_nodes_communication }}/udp --permanent'
   register: open_7946_udp
   changed_when: false
 
 - name: open ports needed
-  command: firewall-cmd --add-port=4789/udp --permanent
+  command: 'firewall-cmd --add-port={{ docker_swarm_port_UDP_overlay_network_traffic }}/udp --permanent'
   register: open_4789
   changed_when: false
 

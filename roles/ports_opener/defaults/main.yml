@@ -1,0 +1,13 @@
+---
+
+# TCP port (tipically) 2376 for secure Docker client communication
+docker_swarm_port_TCP_client: 2376
+
+# TCP port (tipically) 2377 for cluster management communications
+docker_swarm_port_TCP_cluster_managment: 2377
+
+# TCP and UDP port (tipically) 7946 for communication among nodes
+docker_swarm_port_TCP_UDP_nodes_communication: 7946
+
+# UDP port (tipically) 4789 for overlay network traffic
+docker_swarm_port_UDP_overlay_network_traffic: 4789

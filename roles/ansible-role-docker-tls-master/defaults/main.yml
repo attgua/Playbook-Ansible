@@ -1,5 +1,28 @@
 ---
 
+# Path where to create directory on server_1 and server_2
+path_server_1: ./s1
+path_server_2: ./s2
+
+# Path from where to retriver certifications
+path_certif_1: "/Users/atts/Documents/GitHub/Play\
+book-Ansible/roles/install_docker/certs/s1"
+path_certif_2: "/Users/atts/Documents/GitHub/Play\
+book-Ansible/roles/install_docker/certs/s2"
+
+# Path of the overrides file
+override_file_1: "/etc/systemd/system/docker.service.d/override.conf"
+override_file_2: "/etc/systemd/system/docker.service.d/override.conf"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# old variables not used
 docker_tls_verify: yes
 
 tmp_path: /tmp/certs

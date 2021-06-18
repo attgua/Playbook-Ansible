@@ -2,7 +2,7 @@
 - name: test to control the disk space
   assert:
     that:
-      - not {{ item.mount != '/' or ( item.size_available > 42949672960 ) }}
+      - not {{ item.mount != '/' or ( item.size_available >  desidered_memory ) }}
   loop: '{{ ansible_mounts|flatten(levels=1) }}'
   ignore_errors: true
   register: sufficient_memory
@@ -12,9 +12,10 @@
     name:
       - lvm2
     state: present
-  register: lvm2
+  register: rpm_lvm2_present
   when: sufficient_memory is failed
+  
 
 - name: Resize '/dev/sda1' device in order to have 40 GB
-  command: fsadm -y resize '/dev/sda1' 40G
+  command: fsadm -y resize {{ disposive_loc }} {{ desidered_memory }}
   when: sufficient_memory is failed

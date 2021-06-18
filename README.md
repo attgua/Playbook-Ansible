@@ -61,7 +61,7 @@ The second condition with `fasdam` now disponible resizes the disk memory.
 A pre-configured playbook made by [yonglai](https://gist.github.com/yonglai/d4617d6914d5f4eb22e4e5a15c0e9a03) is used as a base to install docker.
 I added control of the presence of the packages, so if the playbook is played more times the packages already present will be skipped.
 
-As a Docker setup, I wrote a routine that opens TCP port `2377` (for cluster management communications) TCP and UDP port `7946` (for communication among nodes), and UDP port `4789` (for overlay network traffic) as directly indicated in the docker documentation.
+As a Docker setup, I wrote a [routine](https://www.digitalocean.com/community/tutorials/how-to-configure-the-linux-firewall-for-docker-swarm-on-centos-7) that opens TCP port `2377` (for cluster management communications) TCP and UDP port `7946` (for communication among nodes), and UDP port `4789` (for overlay network traffic) as directly indicated in the docker documentation.
 At the end of this routine, the firewalld and the Docker system are reloaded to guarantee the correct configuration.
 
 ## Docker Configuration
@@ -94,7 +94,7 @@ To check if the playbook works correctly you can:
 $ docker --tlsverify --tlscacert=certs/s1/ca.pem --tlscert=certs/s1/cert.pem --tlskey=certs/s1/key.pem -H=192.168.33.40:2376 version
 
 ```
-  - connection with server2
+   - connection with server2:
 
 ```
 

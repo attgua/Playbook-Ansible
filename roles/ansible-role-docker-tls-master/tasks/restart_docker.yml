@@ -13,7 +13,7 @@
 - name: Install docker override file
   template:
     src: override.conf.j2
-    dest: "/etc/systemd/system/docker.service.d/override.conf"
+    dest: override_file_1
     backup: no
     owner: root
     group: root
@@ -24,7 +24,7 @@
 - name: Install docker override file
   template:
     src: override.conf2.j2
-    dest: "/etc/systemd/system/docker.service.d/override.conf"
+    dest: override_file_2
     backup: no
     owner: root
     group: root
