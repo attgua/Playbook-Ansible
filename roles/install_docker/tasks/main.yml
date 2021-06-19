@@ -10,7 +10,7 @@
 - name: Install yum utils
   yum:
     name: yum-utils
-    state: latest
+    state: present
 # when: rpm_check_yum.stdout.find('is not installed') != -1
 
 # - name: Check if device-mapper-persistent-data is installed
@@ -21,7 +21,7 @@
 - name: Install device-mapper-persistent-data
   yum:
     name: device-mapper-persistent-data
-    state: latest
+    state: present
 #  when: rpm_device_mapper_persistent_data.stdout.find('is not installed') != -1
 
 # - name: Check if lvm2 is installed
@@ -66,7 +66,7 @@
 - name: Install Docker
   package:
     name: docker-ce
-    state: latest
+    state: present
 #  when: rpm_docker.stdout.find('is not installed') != -1
 
 - name: Start Docker service

@@ -1,3 +1,4 @@
 ---
 
-- meta: reset_connection
+- name: Reset
+  meta: reset_connection
