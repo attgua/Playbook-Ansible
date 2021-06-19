@@ -1,51 +1,47 @@
 ---
 
-- name: Ensure temporary directory exists
-  file:
-    path: "{{ tmp_path }}"
-    state: directory
-    owner: root
-    group: root
-    recurse: yes
+# - name: Ensure temporary directory exists
+#  file:
+#    path: "{{ tmp_path }}"
+#    state: directory
+#    owner: root
+#    group: root
+#    recurse: true
 
 
-- name: Remove old certificate authority private key
-  file:
-    state: absent
-    path: "{{ tmp_path}}/ca-key.pem"
+# - name: Remove old certificate authority private key
+#  file:
+#    state: absent
+#    path: "{{ tmp_path }}/ca-key.pem"
 
-- name: Remove old certificate authority certificate
-  file:
-    state: absent
-    path: "{{ tmp_path}}/ca.pem"
+# - name: Remove old certificate authority certificate
+#  file:
+#    state: absent
+#    path: "{{ tmp_path }}/ca.pem"
 
-- name: Generate certificate authority private key
-  command: >
-    openssl genrsa -aes256 \
-    -passout pass:{{ privatekey_passphrase }} \
-    -out {{ tmp_path }}/ca-key.pem 4096
+# - name: Generate certificate authority private key
+#  command: >
+#    openssl genrsa -aes256 \
+#    -passout pass:{{ privatekey_passphrase }} \
+#    -out {{ tmp_path }}/ca-key.pem 4096
 
-- name: Generate certificate authority certificate
-  command: >
-    openssl req -new -x509 -days 365 \
-    -key {{ tmp_path }}/ca-key.pem -sha256 \
-    -out {{ tmp_path }}/ca.pem \
-    -passin pass:{{ privatekey_passphrase }} \
-    -subj '/C={{ country }}/ST={{ state_or_province }}>/L={{ locality }}/O={{ organization }}/CN=mike.com'
+# - name: Generate certificate authority certificate
+#  command: >
+#    openssl req -new -x509 -days 365 \
+#    -key {{ tmp_path }}/ca-key.pem -sha256 \
+#    -out {{ tmp_path }}/ca.pem \
+#    -passin pass:{{ privatekey_passphrase }} \
+#    -subj '/C={{ country }}/ST={{ state_or_province }}>/L={{ locality }}/O={{ organization }}/CN=mike.com'
 
-
-
-- name: Copy ca certificate and private key to remote host
-  copy:
-    src: "{{ tmp_path }}/{{ item }}"
-    dest: "{{ tmp_path }}/{{ item }}"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
-    mode: 0644
-  with_items:
-    - ca.pem
-    - ca-key.pem
-  when: 
-    - not skip_ca_cert_and_key_copy
-
-
+# - name: Copy ca certificate and private key to remote host
+#  copy:
+#    src: "{{ tmp_path }}/{{ item }}"
+#    dest: "{{ tmp_path }}/{{ item }}"
+#    owner: "{{ ansible_user }}"
+#    group: "{{ ansible_user }}"
+#    mode: 0644
+#  with_items:
+#    - ca.pem
+#    - ca-key.pem
+#  when:
+#    - not skip_ca_cert_and_key_copy

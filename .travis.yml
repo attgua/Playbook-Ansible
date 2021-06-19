@@ -12,5 +12,5 @@ install:
 
 script:
   #- yamllint --no-warnings .
-  - ansible-lint -x package-latest /main.yml
-   --exclude roles/ansible-dockerswarm-master
+  - "ansible-lint -x package-latest ./main.yml\
+   --exclude roles/ansible-dockerswarm-master"

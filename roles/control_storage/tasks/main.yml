@@ -14,7 +14,6 @@
     state: present
   register: rpm_lvm2_present
   when: sufficient_memory is failed
-  
 
 - name: Resize '/dev/sda1' device in order to have 40 GB
   command: fsadm -y resize {{ disposive_loc }} {{ desidered_memory }}

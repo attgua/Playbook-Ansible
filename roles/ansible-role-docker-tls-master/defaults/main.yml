@@ -23,13 +23,13 @@ override_file_2: "/etc/systemd/system/docker.service.d/override.conf"
 #
 #
 # old variables not used
-docker_tls_verify: yes
+docker_tls_verify: true
 
 tmp_path: /tmp/certs
 
 client_certificate_path: "/home/{{ ansible_user }}/.docker"
 server_certificate_path: /etc/docker/ssl
-    
+
 subjectAltName: "IP:127.0.0.1"
 
 docker_port: 2376
@@ -41,8 +41,6 @@ locality: London
 organization: Global
 organizational_unit_name: IT
 
-skip_docker_ca_cert_and_key_copy: yes
-skip_docker_service_override: no
-skip_docker_restart: no
-
-
+skip_docker_ca_cert_and_key_copy: true
+skip_docker_service_override: false
+skip_docker_restart: false

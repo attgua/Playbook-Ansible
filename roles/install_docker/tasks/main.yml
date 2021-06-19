@@ -1,36 +1,38 @@
 ---
+# Geerlinguys say that Ansible automatically checks for presence before installing
 
-- name: Check if yum is installed
-  command: rpm -q yum
-  ignore_errors: true 
-  register: rpm_check_yum
+# - name: Check if yum is installed
+#  command: rpm -q yum
+#  ignore_errors: true
+#  register: rpm_check_yum
+#  when: true
 
 - name: Install yum utils
   yum:
     name: yum-utils
     state: latest
-  when: rpm_check_yum.stdout.find('is not installed') != -1
+# when: rpm_check_yum.stdout.find('is not installed') != -1
 
-- name: Check if device-mapper-persistent-data is installed
-  command: rpm -q device-mapper-persistent-data
-  ignore_errors: true
-  register: rpm_device_mapper_persistent_data
+# - name: Check if device-mapper-persistent-data is installed
+#  command: rpm -q device-mapper-persistent-data
+#  ignore_errors: true
+#  register: rpm_device_mapper_persistent_data
 
 - name: Install device-mapper-persistent-data
   yum:
     name: device-mapper-persistent-data
     state: latest
-  when: rpm_device_mapper_persistent_data.stdout.find('is not installed') != -1
+#  when: rpm_device_mapper_persistent_data.stdout.find('is not installed') != -1
 
-- name: Check if lvm2 is installed
-  command: rpm -q lvm2
-  ignore_errors: true
-  register: rpm_lvm2
+# - name: Check if lvm2 is installed
+#  command: rpm -q lvm2
+#  ignore_errors: true
+#  register: rpm_lvm2
 
 - name: Install lvm2
   yum:
     name: lvm2
-  when: rpm_lvm2.stdout.find('is not installed') != -1
+#  when: rpm_lvm2.stdout.find('is not installed') != -1
 
 - name: Add Docker repo
   get_url:
@@ -56,16 +58,16 @@
     value: 0
   become: true
 
-- name: Check if docker is installed
-  command: rpm -q docker-ce
-  ignore_errors: true
-  register: rpm_docker
+# - name: Check if docker is installed
+#  command: rpm -q docker-ce
+#  ignore_errors: true
+#  register: rpm_docker
 
 - name: Install Docker
   package:
     name: docker-ce
     state: latest
-  when: rpm_docker.stdout.find('is not installed') != -1
+#  when: rpm_docker.stdout.find('is not installed') != -1
 
 - name: Start Docker service
   service:
