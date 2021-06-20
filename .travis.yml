@@ -7,6 +7,7 @@ install:
   - pip install ansible ansible-lint
   - ansible-lint --version
   - python3 -m pip install "molecule[ansible]"
+  - python3 -m pip install --user "molecule[docker]"
 
 script:
   - ansible-lint .
