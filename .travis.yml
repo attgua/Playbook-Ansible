@@ -6,8 +6,7 @@ services:
 install:
   - pip install ansible ansible-lint
   - ansible-lint --version
-  - python3 -m pip install molecule
-  - python3 -m pip install required driver docker
+  - python3 -m pip install "molecule[ansible]"
 
 script:
   - ansible-lint .
