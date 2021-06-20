@@ -1,4 +1,5 @@
 [![Build Status](https://www.travis-ci.com/attgua/Playbook-Ansible.svg?branch=main)](https://www.travis-ci.com/attgua/Playbook-Ansible)
+[![ansible-lint](https://github.com/attgua/Playbook-Ansible/actions/workflows/github_actions.yml/badge.svg)](https://github.com/attgua/Playbook-Ansible/actions/workflows/github_actions.yml)
 
 # Playbook-Ansible
 The task of this repository was to create a **playbook with Ansible** able to:
@@ -21,9 +22,9 @@ To make this playbook work properly are required:
 
 The presence of *[vagrant-hostsupdater](https://github.com/agiledivider/vagrant-hostsupdater)* is also recommended for automatic management of hosts, which otherwise can still be done manually.
 
-To create a secure SSH connection, in addition to the connection provided by Vagrant, you can follow, from step two, the *the path to success* to build a convenient local playground present [here](https://max.engineer/six-ansible-practices#automate-adding-your-pub-key-to-vms).
+To create a secure SSH connection, in addition to the connection provided by Vagrant, you can follow, from step two, the *the path to success* to build a convenient local playground presented [here](https://max.engineer/six-ansible-practices#automate-adding-your-pub-key-to-vms).
 
-Otherwise, if you have correctly set private key, public key, and config in your `\~.ssh` folder you just can use the script present in Vagranfile (taken from [here](https://stackoverflow.com/questions/30075461/how-do-i-add-my-own-public-key-to-vagrant-vm)) of this repo that the first time it is run it will copy its public key on the VM allowing access as `ssh vagrant@your_device_name`.
+Otherwise, if you have correctly set private key, public key, and config in your `\~.ssh` folder you can use the script present in the Vagranfile (taken from [here](https://stackoverflow.com/questions/30075461/how-do-i-add-my-own-public-key-to-vagrant-vm)) of this repo. The first time that the script is run it will copy the public key on the VM allowing access as `ssh vagrant@your_device_name`. 
 
 
 ## Startup CentOS

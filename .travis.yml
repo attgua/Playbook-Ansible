@@ -1,7 +1,17 @@
 ---
 language: python
+services:
+  - docker
+
 install:
   - pip install ansible ansible-lint
   - ansible-lint --version
+  - python3 -m pip install molecule
+  - python3 -m pip install required driver docker
+
 script:
   - ansible-lint .
+
+before_script: cd ./roles/install_docker
+script:
+  - molecule test

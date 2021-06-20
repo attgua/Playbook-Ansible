@@ -72,7 +72,7 @@
 - name: Start Docker service
   service:
     name: docker
-    state: started
+#    state: started
     enabled: true
   become: true
 
