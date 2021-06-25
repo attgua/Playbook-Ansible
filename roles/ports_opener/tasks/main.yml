@@ -1,6 +1,13 @@
 ---
 # open ports on CentOS
 
+- name: Start Docker service
+  service:
+    name: docker
+    state: started
+    enabled: true
+  become: true
+
 - name: start firewalld
   command: sudo systemctl start firewalld
   register: start_firewalld

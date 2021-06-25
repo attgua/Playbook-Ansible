@@ -69,13 +69,6 @@
     state: present
 #  when: rpm_docker.stdout.find('is not installed') != -1
 
-- name: Start Docker service
-  service:
-    name: docker
-    state: started
-    enabled: true
-  become: true
-
 # allow non-root users access to docker
 - name: Add user vagrant to docker group
   user:
