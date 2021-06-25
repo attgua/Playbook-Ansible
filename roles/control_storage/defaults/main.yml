@@ -4,4 +4,4 @@
 desidered_memory: 42949672960
 
 # Location of the memory that has to be resized
-disposive_loc: '/dev/sda1'
+disposive_loc: './dev/sda1'

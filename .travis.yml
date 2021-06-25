@@ -10,6 +10,6 @@ install:
   - python3 -m pip install "molecule[docker]"
 
 script:
-  - ansible-lint .
+  - ansible-lint playbook.yml
   - cd ./roles/install_docker
   - molecule test

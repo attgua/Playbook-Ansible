@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-python@v2
       - run: pip install ansible ansible-lint
       - run: ansible-lint --version
-      - run: ansible-lint .
+      - run: ansible-lint playbook.yml
       - uses: actions/checkout@v2
         with:
           path: molecule_demo

@@ -18,13 +18,14 @@ Vagrant.configure("2") do |config|
     	:ip => "192.168.33.41"
     }
 	]
+  config.disksize.size = '51GB'
 
   servers.each do |machine|
   	config.vm.define machine[:hostname] do |node|
   	      node.vm.box =machine[:box]
   	      node.vm.hostname = machine[:hostname]
   	      node.vm.network :private_network, ip: machine[:ip]
-          
+        #node.disksize.size = '40GB'
 
           node.vm.provision "shell" do |s|
             ssh_prv_key = ""
@@ -60,7 +61,6 @@ Vagrant.configure("2") do |config|
           node.vm.provider :virtualbox do |vb|
           	vb.customize ["modifyvm", :id, "--memory",1024]
           	vb.customize ["modifyvm", :id, "--cpus",1]
-
           end
 	  end
   end

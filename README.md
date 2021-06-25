@@ -20,7 +20,7 @@ To make this playbook work properly are required:
 * [Vagrant](https://www.ansible.com/)
 * [Ansible](https://ansible.com)
 
-The presence of *[vagrant-hostsupdater](https://github.com/agiledivider/vagrant-hostsupdater)* is also recommended for automatic management of hosts, which otherwise can still be done manually.
+The presence of *[vagrant-hostsupdater](https://github.com/agiledivider/vagrant-hostsupdater)* is also recommended for automatic management of hosts, which otherwise can still be done manually. The presence of [vagrant-disksize](https://github.com/sprotheroe/vagrant-disksize) is strongly reccomanded in order to manage the increases in partition space.
 
 To create a secure SSH connection, in addition to the connection provided by Vagrant, you can follow, from step two, the *the path to success* to build a convenient local playground presented [here](https://max.engineer/six-ansible-practices#automate-adding-your-pub-key-to-vms).
 
@@ -44,17 +44,23 @@ Furthermore, thanks to the script mentioned, the access key for the connection i
 
 ## Control Memory
 
+!! OLD SOLUTION COMMENTED -> DOESN'T WORK !!
 This solution is inspired from [this](https://stackoverflow.com/questions/26981907/using-ansible-to-manage-disk-space) solved-problem on StackOverflow.
 
 At the execution of the main ansible:
 ```
-$ ansible-playbook -i hosts main.yml
+$ ansible-playbook -i hosts playbook.yml
 ```
 the first role passed has the task of carrying out a check on the amount of memory, made possible by the loop `loop: "{{ ansible_mounts|flatten(levels=1) }}"` which checks that the amount of memory is greater than 40 GB.
 
 If fails it actives the next two conditions. 
 The first condition installs the `lvm2` package. 
-The second condition with `fasdam` now disponible resizes the disk memory.
+The second condition with `fsadm` now disponible resizes the disk memory.
+
+!!CURRENT SOLUTION!!
+In the vagrantfile, thanks to the plug in vagrant disk size, it is possible to resize the image of CentOS machines.
+So I gave it 51 GB. 
+In this way we have 10 GB of the initial image and then I can create a second partition /dev/sda2 which is assigned with 40 GB and in which the docker containers will run.
 
 
 ## Docker Setup

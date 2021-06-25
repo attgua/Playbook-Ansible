@@ -1,20 +1,123 @@
 ---
-- name: test to control the disk space
-  assert:
-    that:
-      - not {{ item.mount != '/' or ( item.size_available >  desidered_memory ) }}
-  loop: '{{ ansible_mounts|flatten(levels=1) }}'
-  ignore_errors: true
-  register: sufficient_memory
+- name: Read device information
+  community.general.parted: device=/dev/sda unit=MiB
+  register: sda_info
 
-- name: install lvm2 tools
-  package:
-    name:
-      - lvm2
+- name: Create a partition for Docker
+  parted:
+    device: /dev/sda
+    number: 2
     state: present
-  register: rpm_lvm2_present
-  when: sufficient_memory is failed
+    part_start: "{{ sda_info.partitions[0].end }}MiB"
+    part_end: "{{ sda_info.partitions[0].end + 40960 }}MiB"
 
-- name: Resize '/dev/sda1' device in order to have 40 GB
-  command: fsadm -y resize {{ disposive_loc }} {{ desidered_memory }}
-  when: sufficient_memory is failed
+- name: Format partition as ext4
+  filesystem:
+    dev: /dev/sda2
+    fstype: ext4
+
+- name: Mount Docker partition
+  ansible.posix.mount:
+    src: /dev/sda2
+    path: /var/lib/docker
+    state: mounted
+    fstype: ext4
+
+# - name: test to control the disk space
+#  assert:
+#    that:
+#      - item.mount == '/' and ( item.size_available > desidered_memory )
+#  loop: '{{ ansible_mounts|flatten(levels=1) }}'
+#  ignore_errors: true
+#  register: sufficient_memory
+
+# - name: Print the gateway for each host when defined
+#  ansible.builtin.debug:
+#    msg: item.mount {{ item.mount }} item.size_available {{ item.size_available }} desidered_memory {{ desidered_memory }}
+#  loop: '{{ ansible_mounts|flatten(levels=1) }}'
+
+# - name: install lvm2 tools
+#  package:
+#    name:
+#      - lvm2
+#    state: present
+#  register: rpm_lvm2_present
+#  when: sufficient_memory is failed
+
+# - name: Resize '/dev/sda1' device in order to have 40 GB
+#  command: fsadm -y resize {{ disposive_loc }} {{ desidered_memory }}
+#  when: sufficient_memory is failed
+
+# - name: "Create partitions on devices"
+#  block:
+#    - name: install parted
+#      package:
+#        name: parted
+#        state: present
+
+#    - name: "Read device information /dev/sda"
+ #     parted:
+  #      device: "/dev/sda"
+   #     unit: MiB
+    #  register: device_info
+
+#    - name: "Add new partition /dev/sda2"
+ #     parted:
+  #      device: "/dev/sda"
+   #     number: "2"
+    #    part_type: primary
+     #   flags: [ lvm ]
+      #  state: present
+       # part_end: "100%"
+        # part_start: "{{ device_info.partitions[0].end + 1}}MiB"
+
+#    - name: Remove partition number 1
+ #     community.general.parted:
+  #      device: /dev/sda
+   #     number: 1
+    #    state: absent
+
+    # - name: Remove all partitions from disk
+    #  community.general.parted:
+    #    device: /dev/sda
+    #    number: '{{ item.num }}'
+    #    state: absent
+    #  loop: '{{ sdb_info.partitions }}'
+    #  args:
+    #    warn: false
+
+#    - name: Extend an existing partition to fill all available space
+ #     community.general.parted:
+  #      device: /dev/sda
+   #     number: "{{ sdb_info.partitions | length }}"
+    #    part_end: "100%"
+     #   resize: true
+      #  state: present
+
+  #  - name: "Create a volume group on top of /dev/sda1 with physical extent size = 32MB"
+  #    community.general.lvg:
+  #      vg: vg.services
+  #      pvs: /dev/sda1
+  #      pesize: 32
+
+#    - name: "Read device information /dev/sda"
+#      parted:
+#        device: "/dev/sda"
+#        unit: MiB
+#      register: device_info
+
+#    - name: "Add new partition /dev/sda2"
+#      parted:
+#        device: "/dev/sda"
+#        number: "2"
+#        part_type: primary
+#        flags: [ lvm ]
+#        state: present
+#        part_end: "100%"
+#        part_start: "{{ device_info.partitions[0].end + 1}}MiB"
+
+   # - name: "Add device to exising volume group {{ volumeGroup }}."
+   #   lvg:
+   #     vg: " {{ volumeGroup }} "
+   #     pvs: "/dev/sda1,/dev/sda2"
+ # when: sufficient_memory is failed
